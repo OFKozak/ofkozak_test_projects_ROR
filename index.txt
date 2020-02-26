@@ -1,4 +1,4 @@
 it's index file
 e-mail olexiykozak@gmail.com
-set to red symbols
-set to blue symbols
+set to #ff0000 symbols
+set to #0000ff symbols
