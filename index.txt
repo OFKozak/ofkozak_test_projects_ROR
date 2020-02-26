@@ -1,4 +1,4 @@
 It's index file.
 E-mail at oleksijkozak@gmail.com.
-Set to red symbols.
-Set to blue symbols.
+Set to red (#ff0000) symbols.
+Set to blue (#0000ff) symbols.
