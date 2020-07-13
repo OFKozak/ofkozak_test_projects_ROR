@@ -135,9 +135,133 @@ print upper, "\n"
 uppercase = string_array.map &:upcase
 print uppercase, " # => it's another way\n"
 # *** task_19 ***
-f = Proc.new {|a, b| a**b }
-y = f.call(a,b)
+   puts "\t#19" # *** task_19 ***
+a = 2
+b = 3
+f = Proc.new {|c, d| c**d }
+x = f.call(a,b)
+puts "x = #{x}"
 y = f[a,b]
-y = f.(a,b)
-# *** task_20 ***     
-l = -> (a, b) { a + b }
+puts "y = #{y}"
+z = f.(a,b)
+puts "z = #{z}"
+# *** task_20 ***
+   puts "\t#20" # *** task_20 ***
+lb = lambda { |c, d| c + d }
+x = lb.call(a, b)
+puts "x = #{x}"
+lb = -> (c, d) { c + d }
+y = lb.call(a, b)
+puts "y = #{y}"
+puts "#{(-> (c, d) {c + d}).call(a, b)} # => it's another way"
+# additional tasks
+   puts "\t#a1" # *** additional_task_1 ***
+def factorial(n)   
+   if n < 1                  # перевірка коректності значення аргументу
+      raise "Будь ласка, використайте аргумент > 0"
+   elsif n == 1              # якщо аоргумент дорівнює 1,
+      1                      # то значення виклику дорівнює 1
+   else                      # інакше факторіал n дорівнює n,
+      n * factorial(n-1)     # помноженому на факторіал n-1
+   end
+end
+# factorial(-1)
+puts "factorial(1) = #{factorial(1)}"
+puts "factorial(2) = #{factorial(2)}"
+puts "factorial(3) = #{factorial(3)}"
+   puts "\t#a2" # *** additional_task_2 ***
+def proc_return_one
+    Proc.new { return "proc"}.call
+    return "proc_return method finished"
+end
+puts proc_return_one
+def lambda_return_one
+    lambda { return "lambda"}.call
+    return "lambda_return method finished"
+end
+puts lambda_return_one
+def proc_return_two
+    puts "before proc"
+    my_proc = proc { return "proc" }
+    puts my_proc[]
+    puts "after proc"
+end
+proc_return_two
+def lambda_return_two
+    puts "before lambda"
+    my_lambda = -> { return "lambda" }
+    puts my_lambda.call
+    puts "after lambda"
+end
+lambda_return_two
+pr = proc do |fst, snd, thd|
+     p fst
+     p snd
+     p thd
+end
+pr.call('pr_first')
+lb = lambda do |fst, snd, thd|
+   p fst
+   p snd
+   p thd
+end
+# lb.call('lb_first') => wrong number of arguments (given 1, expected 3) (ArgumentError)
+lb.call('lb_first', 'lb_second', 'lb_third')
+   puts "\t#a3" # *** additional_task_3 ***
+def multiplier(k) # метод повертає proc-об'єкт, що замикає в собі параметр k
+    proc { |arr| arr.collect{|el| el*k} }
+end
+tripler = multiplier(3) # отримання proc-об'єкта, що знає, як потроїти число 
+print tripler.call([1, 2, 3, 4, 5]) # виводиться [3, 6, 9, 12, 15]
+   puts "\n\t#a4" # *** additional_task_4 ***
+def divider(l) # метод повертає lambda-об'єкт, що замикає в собі параметр l
+   ->(arr) { arr.reduce{ |sum, el| sum + el }.fdiv l }
+end
+array = [2, 3, 4, 5]
+arithmetic_mean = divider(array.length)
+puts arithmetic_mean.call(array)
+def array_arithmetic_mean(arr) # ще один спосіб
+   puts arr.reduce { |sum, el| sum + el}.fdiv arr.length
+end
+array_arithmetic_mean([2, 3, 4, 5])
+   puts "\n\t#a5" # *** additional_task_5 ***
+def substring_method(str)
+   if str.length <= 2
+      "The string is too short"
+   elsif str.length.even?
+      str[str.length/2 - 1, 2]
+   else
+      str[1, str.length - 2]
+   end
+end
+puts substring_method("qw")
+puts substring_method("qwert")
+puts substring_method("qwerty")
+   puts "\n\t#a6" # *** additional_task_6 ***
+def vowel_letters(str)
+   if str.class == String
+      str.gsub(/[aeiouy]/, "@").chars.select { |el| el == "@" }.length
+   else
+      "Warning! The string argument is required!"
+   end
+end
+puts vowel_letters("Hello, everybody!")
+puts vowel_letters("qsc_wdv_rgn")
+puts vowel_letters(123)
+def vowel_letters(str) # it's another way
+   if str.class == String
+      str.chars.select { |el| ["a", "e", "i", "o", "u", "y"].include?(el) }.length
+   else
+      "Warning! The string argument is required!"
+   end
+end
+puts vowel_letters("Wow, this is a jellyfish!")
+puts vowel_letters("sdf_ghj_klm")
+puts vowel_letters([4, 5, 6])
+   puts "\n\t#a7" # *** additional_task_7 ***
+def char_collection(char_one, char_two)   
+   (char_one..char_two).to_a[1...-1].each { |el| print "#{el} " }
+end
+char_collection("A", "F")
+puts
+char_collection("k", "t")
